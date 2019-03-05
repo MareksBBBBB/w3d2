@@ -1,0 +1,32 @@
+import org.apache.spark.sql.SQLContext
+import org.apache.spark.{SparkConf, SparkContext}
+//import org.apache.spark.sql.functions._
+
+object this_object {
+  case class columns (cdatetime:String, address:String, district:Int, beat:String, grid:String, crimedescr:String, ucr_ncic_code:String, latitude:Float, longitude:Float)
+  def main(args: Array[String]) {
+    val conf = new SparkConf().setAppName("this_app").setMaster("local")
+    val sc = new SparkContext(conf)
+    println("jptv!")
+    import sqlContext.implicits._
+  val sqlContext = new SQLContext(sc)
+  val df = sqlContext.read
+      .format("com.databricks.spark.csv")
+      .option("header", "true")
+      .option("inferSchema", "true")
+      .load("C:\\Users\\Student\\IdeaProjects\\Sacramento\\Scrcrime.csv")
+   // val cRdd = df.map {
+   //   line =>
+    //    val col = line.split(",")
+    //    columns(col(0), col(1), col(2), col(3), col(4), col(5), col(6), col(7), col(8))
+    }
+    
+    df.printSchema()
+
+    val task1 = sqlContext.sql("SELECT DISTINCT district FROM df ORDER BY district ASC").show()
+    val task2 = sqlContext.sql("SELECT COUNT(district) AS ggg, district FROM df GROUP BY district ORDER BY ggg DESC LIMIT 1").show()
+    val task3 = 
+
+}
+
+}
